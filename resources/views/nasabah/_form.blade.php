@@ -13,7 +13,7 @@
     </div>
     <div class="form-group">
         <label for="date">Tanggal Lahir</label>
-        <input type="date" class="form-control" id="date" name="date" value="{{$data->date_of_birth}}" >
+        <input type="date" class="form-control" id="date" name="date" value="{{$data->date_of_birth}}" required >
     </div>
     <div class="form-group">
         <label for="gender">Jenis Kelamin</label>

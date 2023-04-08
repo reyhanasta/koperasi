@@ -19,7 +19,7 @@ class CustomerController extends Controller
     public function index()
     {
         //
-       $data = Customer::all();
+       $data = Customer::all()->sortByDesc('created_at');
        return view('nasabah.list',compact('data'));
     }
 

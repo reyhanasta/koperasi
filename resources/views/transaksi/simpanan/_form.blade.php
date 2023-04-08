@@ -25,11 +25,6 @@
     <div class="form-group">
         <label for="name">Jumlah</label>
         <div class="input-group">
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="">Rp.</span>
-                </div>
-            </div>
             <input type="text" class="form-control" id="amount" name="amount"
                 placeholder="Masukan nominal yang akan di Simpan" value="{{ $data->amount }}" required data-mask>
         </div>

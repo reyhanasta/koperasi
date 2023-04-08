@@ -14,10 +14,11 @@ class SavingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+   
     public function index()
     {
         //
-        $data = Saving::all();
+        $data = Saving::all()->sortByDesc('created_at');
         return view('transaksi.simpanan.list',compact('data'));
     }
 
@@ -46,13 +47,14 @@ class SavingController extends Controller
         //
         $data = new Saving();
         //$id_rekening = CustomerAccount::findBy('id_customer',$request->customer);
-        $id_rekening = CustomerAccount::where('id_customer', 1)->first();
-        $data->id_customer = $id_rekening->id;
+        $rekeningNasabah = CustomerAccount::where('id_customer', $request->customer)->first();
+        $data->id_customer = $rekeningNasabah->id;
         $data->type = $request->type;
         $data->amount = $request->amount;
         $data->desc = $request->desc;
+        $rekeningNasabah->balance += $request->amount;
+        $rekeningNasabah->save();
         $data->save();
-
         return redirect('/tr-savings')->with('success','Data Berhasil di Tambahkan !');
 
     }
