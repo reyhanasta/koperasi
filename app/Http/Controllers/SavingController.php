@@ -18,7 +18,11 @@ class SavingController extends Controller
     public function index()
     {
         //
-        $data = Saving::all()->sortByDesc('created_at');
+        // $data = Saving::all()->sortByDesc('created_at');
+        // Mendapatkan semua data anggota beserta data pinjaman yang dimilikinya
+        $data = Saving::with('customer')->get()->sortByDesc('created_at');
+        
+      
         return view('transaksi.simpanan.list',compact('data'));
     }
 

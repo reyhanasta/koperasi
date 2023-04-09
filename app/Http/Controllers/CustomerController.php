@@ -77,7 +77,8 @@ class CustomerController extends Controller
     {
         //
         $data = Customer::findorFail($id);
-        return view('nasabah.show',compact('data'));
+        $dataTabungan = CustomerAccount::where('id_customer', $id)->first();
+        return view('nasabah.show',compact('data','dataTabungan'));
     }
 
     /**

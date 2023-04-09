@@ -9,7 +9,10 @@ class Saving extends Model
 {
     use HasFactory;
 
-    public function customer(){
+    public function customerAccount(){
         return $this->belongsTo(CustomerAccount::class);
+    }
+    public function customer(){
+        return $this->belongsTo(Customer::class,'id_customer');
     }
 }

@@ -32,6 +32,7 @@
                   <th>Nama Nasabah</th>
                   <th>Jenis Simpanan</th>
                   <th>Jumlah Simpanan</th>
+                  <th>Tanggal Transaksi</th>
                   <th>Deskripsi</th>
                   <th>Action</th>
                 </tr>
@@ -40,9 +41,10 @@
                 @foreach ($data as $index)
                 <tr>
                   <td>{{$loop->iteration}}</td>
-                  <td>{{$index->name}}</td>
+                  <td>{{$index->customer->name}}</td>
                   <td>{{$index->type}}</td>
                   <td>{{$index->amount}}</td>
+                  <td>{{$index->created_at}}</td>
                   <td>{{$index->desc}}</td>
                   <td>
                     <div class="btn-group">
