@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class OfficerController extends Controller
 {
@@ -135,8 +136,8 @@ class OfficerController extends Controller
             $file=$request->file('profile_pict');
             $nama_file = time().str_replace(" ","",$file->getClientOriginalName());
             $file->move('picture',$nama_file);
-
-            File::delete('foto',$data->profile_pict);
+            $image_path = public_path().'/picture/'.$data->profile_pict;
+            File::delete('picture',$image_path);
             $data->profile_pict = $nama_file;
         }
         $data->save();
@@ -153,9 +154,14 @@ class OfficerController extends Controller
     {
         //
         $data = Officer::find($id);
+        $image_path = public_path().'/picture/'.$data->profile_pict;
+        if(File::exists($image_path))
+        {
+            File::delete($image_path);
+            //unlink($image_path);
+        }
+        $data->delete(); 
         User::where('username',$data->email)->delete();
-        $data->delete();
- 
         return redirect('/officer')->with('success','Data berhasil dihapus');
     }
    
