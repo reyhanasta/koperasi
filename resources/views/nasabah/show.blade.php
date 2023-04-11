@@ -4,6 +4,9 @@
  <!-- Main content -->
  <section class="content">
   <div class="container-fluid">
+    {{-- <div class="row">
+      <div class="col-lg-3"><a href="#"><i class="fas fa-arrow-left nav-icon"></i> Kembali</a></div>
+    </div> --}}
     <div class="row">
       <div class="col-md-1"></div>
       <div class="col-md-3">
@@ -35,6 +38,7 @@
             <ul class="nav nav-pills">
               <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Profile</a></li>
               <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Buku Tabungan</a></li>
+              <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Riwayat Transaksi</a></li>
               <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Pinjaman</a></li>
             </ul>
           </div><!-- /.card-header -->

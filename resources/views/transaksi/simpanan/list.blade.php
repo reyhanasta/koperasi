@@ -34,19 +34,19 @@
                   <th>Jumlah Simpanan</th>
                   <th>Tanggal Transaksi</th>
                   <th>Deskripsi</th>
-                  <th>Action</th>
+                  {{-- <th>Action</th> --}}
                 </tr>
                 </thead>
                 <tbody>
                 @foreach ($data as $index)
                 <tr>
                   <td>{{$loop->iteration}}</td>
-                  <td>{{$index->customer->name}}</td>
-                  <td>{{$index->type}}</td>
-                  <td>{{$index->amount}}</td>
+                  <td><a href="{{ url('customer/'.$index->customer->id)}}">{{$index->customer->name}}</a></td>
+                  <td>{{ucfirst($index->type)}}</td>
+                  <td>Rp.{{number_format($index->amount)}}</td>
                   <td>{{$index->created_at}}</td>
                   <td>{{$index->desc}}</td>
-                  <td>
+                  {{-- <td>
                     <div class="btn-group">
                       <button type="button" class="btn btn-default">Tindakan</button>
                       <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
@@ -63,8 +63,7 @@
                         </form>
                       </div>
                     </div>
-                  
-                </td>
+                  </td> --}}
                 </tr>
                 @endforeach
               

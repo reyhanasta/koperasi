@@ -43,7 +43,6 @@
                         <span class="sr-only">Toggle Dropdown</span>
                       </button>
                       <div class="dropdown-menu" role="menu">
-                        <a class="dropdown-item" href="{{ url('master-jabatan/'.$jabatan->id)}}"><i class="fas fa-search nav-icon"></i> Detail</a>
                         <a class="dropdown-item" href="{{ url('master-jabatan/'.$jabatan->id.'/edit')}}"><i class="fas fa-edit nav-icon"></i> Edit</a>
                         <div class="dropdown-divider"></div>
                         <form action="{{ url('master-jabatan/'.$jabatan->id)}}" method="post">

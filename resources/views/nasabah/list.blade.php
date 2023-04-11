@@ -39,8 +39,8 @@
                 <tbody>
                 @foreach ($data as $nasabah)
                 <tr>
-                  <td>{{$nasabah->name}}</td>
-                  <td>{{$nasabah->address}}</td>
+                  <td>{{ucwords($nasabah->name)}}</td>
+                  <td>{{ucwords($nasabah->address)}}</td>
                   <td>{{$nasabah->phone}}</td>
                   <td>
                     <div class="btn-group">

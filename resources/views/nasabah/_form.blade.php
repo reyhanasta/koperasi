@@ -9,7 +9,7 @@
     </div>
     <div class="form-group">
         <label for="phone">Nomor Telephone</label>
-        <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter customer phone number" value="{{$data->phone}}" required>
+        <input type="tel" class="form-control" id="phone" name="phone" placeholder="08XX-XXXX-XXXX" value="{{$data->phone}}" required phone-number>
     </div>
     <div class="form-group">
         <label for="date">Tanggal Lahir</label>

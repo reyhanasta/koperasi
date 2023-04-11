@@ -21,9 +21,10 @@ class SavingController extends Controller
         // $data = Saving::all()->sortByDesc('created_at');
         // Mendapatkan semua data anggota beserta data pinjaman yang dimilikinya
         $data = Saving::with('customer')->get()->sortByDesc('created_at');
+        $back = url()->previous();
         
       
-        return view('transaksi.simpanan.list',compact('data'));
+        return view('transaksi.simpanan.list',compact('data','back'));
     }
 
     /**
@@ -36,8 +37,9 @@ class SavingController extends Controller
         //
         $data = new Saving;
         $customer = Customer::all();
-       
-        return view('transaksi.simpanan.add',compact('data','customer'));
+        $back = url()->previous();
+        $confirm = "return confirm('Pastikan Data sudah di isi dengan benar, karena data transaksi tidak dapat di ubah lagi')";
+        return view('transaksi.simpanan.add',compact('data','customer','back','confirm'));
     }
 
     /**
@@ -59,7 +61,7 @@ class SavingController extends Controller
         $rekeningNasabah->balance += $request->amount;
         $rekeningNasabah->save();
         $data->save();
-        return redirect('/tr-savings')->with('success','Data Berhasil di Tambahkan !');
+        return redirect('/tr-savings')->with('success','Data berhasil di tambahkan dan buku tabungan nasabah berhasil di Update!');
 
     }
 

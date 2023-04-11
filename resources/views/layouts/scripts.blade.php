@@ -45,18 +45,20 @@
 <script>
     $(function() {
         bsCustomFileInput.init();
-         //Money Euro
-         $('[data-mask]').inputmask({
-        'alias': 'numeric',
-        'groupSeparator': '.',
-        'radixPoint': ',',
-        'autoGroup': true,
-        'digits': 0,
-        'prefix': 'Rp ',
-        'removeMaskOnSubmit': true
-    })
-
-
+        //Money Euro
+        $('[data-mask]').inputmask({
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'radixPoint': ',',
+                'autoGroup': true,
+                'digits': 0,
+                'prefix': 'Rp ',
+                'removeMaskOnSubmit': true
+            }),
+            $('[phone-number]').inputmask('9999-9999-999999', {
+                "placeholder": " ",
+                'alias': 'numeric',
+                'removeMaskOnSubmit': true
+            })
     });
 </script>
-

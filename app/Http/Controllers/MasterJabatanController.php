@@ -16,7 +16,8 @@ class MasterJabatanController extends Controller
     {
         //
         $data = MasterJabatan::all();
-        return view('master.jabatan.list',compact('data'));
+        $back = url()->previous();
+        return view('master.jabatan.list',compact('data','back'));
     }
 
     /**
@@ -28,7 +29,8 @@ class MasterJabatanController extends Controller
     {
         //
         $data = new MasterJabatan;
-        return view('master.jabatan.add',compact('data'));
+        $back = url()->previous();
+        return view('master.jabatan.add',compact('data','back'));
     }
 
     /**
@@ -69,7 +71,8 @@ class MasterJabatanController extends Controller
     {
         //
         $data = MasterJabatan::find($id);
-        return view('master.jabatan.edit',compact('data'));
+        $back = url()->previous();
+        return view('master.jabatan.edit',compact('data','back'));
     }
 
     /**

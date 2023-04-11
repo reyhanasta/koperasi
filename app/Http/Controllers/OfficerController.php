@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MasterJabatan;
-use App\Models\Officer;
 use App\Models\User;
+use App\Models\Officer;
 use Illuminate\Http\Request;
+use App\Models\MasterJabatan;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 
@@ -34,7 +35,8 @@ class OfficerController extends Controller
         //
         $dataPegawai = New Officer;
         $jabatan = MasterJabatan::all();
-        return view('pegawai.add',compact('dataPegawai','jabatan'));
+        $back = url()->previous();
+        return view('pegawai.add',compact('dataPegawai','jabatan','back'));
     }
 
     /**
@@ -46,28 +48,35 @@ class OfficerController extends Controller
     public function store(Request $request)
     {
         //
-        $newPegawai = new Officer;
-        $newUser = new User;
-        $newPegawai->name = $request->name;
-        $newPegawai->gender = $request->gender;
-        $newPegawai->email = $request->email;
-        $newPegawai->position = $request->position;
-        //
-        $newUser->username = $request->email;
-        $newUser->level = 'admin';
-        // $newUser->password = Hash::make('btm'.rand(2,100));
-        $newUser->password = Hash::make('btm100');
-        //
-     
-        if($request->file('profile_pict')){
-            $file=$request->file('profile_pict');
-            $nama_file = time().str_replace(" ","",$file->getClientOriginalName());
-            $file->move('picture',$nama_file);
-            $newPegawai->profile_pict = $nama_file;
+        $validateData = $request->validate([
+            'email' => 'required|email:dns|unique:users,username',
+        ]);
+        if($validateData){
+            $newPegawai = new Officer;
+            $newUser = new User;
+            $newPegawai->name = $request->name;
+            $newPegawai->gender = $request->gender;
+            $newPegawai->email = $request->email;
+            $newPegawai->position = $request->position;
+            //
+            $newUser->username = $request->email;
+            $newUser->level = 'admin';
+            // $newUser->password = Hash::make('btm'.rand(2,100));
+            $newUser->password = Hash::make('btm100');
+            //
+    
+            if($request->file('profile_pict')){
+                $file=$request->file('profile_pict');
+                $nama_file = time().str_replace(" ","",$file->getClientOriginalName());
+                $file->move('picture',$nama_file);
+                $newPegawai->profile_pict = $nama_file;
+            }
+            $newPegawai->save();
+            $newUser->save();
+            return redirect('/officer')->with('success','Data Berhasil di Simpan');
+        }else{ 
+            return back()->with('Somethings wrong');
         }
-        $newPegawai->save();
-        $newUser->save();
-        return redirect('/officer')->with('success','Data Berhasil di Simpan');
     }
 
     /**
@@ -85,7 +94,8 @@ class OfficerController extends Controller
             'joindate' => date('d-m-Y', strtotime($dataPegawai->created_at)),
             'salary' => 'Rp. ' . number_format($dataPegawai->gaji),
             'gender' => ($dataPegawai->gender == 'female') ? 'Perempuan' : 'Laki-laki',
-            'desc' => $dataPegawai->desc ?? '-'
+            'desc' => $dataPegawai->desc ?? '-',
+            'back' => url()->previous()
         ];
        
         return view('pegawai.show',$data );
@@ -102,7 +112,8 @@ class OfficerController extends Controller
         //
         $dataPegawai = Officer::find($id);
         $jabatan = MasterJabatan::all();
-        return view('pegawai.edit',compact('dataPegawai','jabatan'));
+        $back = url()->previous();
+        return view('pegawai.edit',compact('dataPegawai','jabatan','back'));
     }
 
     /**

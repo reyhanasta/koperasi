@@ -19,8 +19,8 @@ class CustomerController extends Controller
     public function index()
     {
         //
-       $data = Customer::all()->sortByDesc('created_at');
-       return view('nasabah.list',compact('data'));
+        $data = Customer::all()->sortByDesc('created_at');
+        return view('nasabah.list', compact('data'));
     }
 
     /**
@@ -31,8 +31,9 @@ class CustomerController extends Controller
     public function create()
     {
         //
-        $data = New Customer;
-        return view('nasabah.add',compact('data'));
+        $data = new Customer;
+        $back = url()->previous();
+        return view('nasabah.add', compact('data', 'back'));
     }
 
     /**
@@ -44,27 +45,29 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         //
-        
-         //CUSTOMER DATA
-         $nasabah = new Customer;
-         $nasabah->name = $request->name;
-         $nasabah->gender = $request->gender;
-         $nasabah->phone = $request->phone;
-         $nasabah->address = $request->address;
-         $nasabah->date_of_birth = $request->date;
+
+        //CUSTOMER DATA
+        $nasabah = new Customer;
+        $nasabah->name = $request->name;
+        $nasabah->gender = $request->gender;
+        $nasabah->phone = $request->phone;
+        $nasabah->address = $request->address;
+        $nasabah->date_of_birth = $request->date;
         //  if($request->file('profile_pict')){
         //      $file=$request->file('profile_pict');
         //      $nama_file = time().str_replace(" ","",$file->getClientOriginalName());
         //      $file->move('picture',$nama_file);
         //      $nasabah->profile_pict = $nama_file;
         //  }
-         $nasabah->save();
-         $buku_nasabah = new CustomerAccount;
-         $buku_nasabah->id_customer = $nasabah->id;
-         $buku_nasabah->balance = 5000;
-         $buku_nasabah->status = "aktif";
-         $buku_nasabah->save();
-         return redirect('/customer')->with('success','Data Berhasil di Simpan');
+        $nasabah->save();
+        if ($nasabah->save()) {
+            $buku_nasabah = new CustomerAccount;
+            $buku_nasabah->id_customer = $nasabah->id;
+            $buku_nasabah->balance = 5000;
+            $buku_nasabah->status = "aktif";
+            $buku_nasabah->save();
+        }
+        return redirect('/customer')->with('success', 'Data Nasabah beserta buku tabungannya berhasil di Tambahkan !');
     }
 
     /**
@@ -78,7 +81,8 @@ class CustomerController extends Controller
         //
         $data = Customer::findorFail($id);
         $dataTabungan = CustomerAccount::where('id_customer', $id)->first();
-        return view('nasabah.show',compact('data','dataTabungan'));
+        $back = url()->previous();
+        return view('nasabah.show', compact('data', 'dataTabungan', 'back'));
     }
 
     /**
@@ -91,8 +95,9 @@ class CustomerController extends Controller
     {
         //
         $data = Customer::find($id);
-        return view('nasabah.edit',compact('data'));
-        
+        $back = url()->previous();
+        return view('nasabah.edit', compact('data', 'back'));
+
     }
 
     /**
@@ -112,7 +117,7 @@ class CustomerController extends Controller
         $data->address = $request->address;
         $data->date_of_birth = $request->date;
         $data->save();
-        return redirect('/customer')->with('success','Data Berhasil di Simpan');
+        return redirect('/customer')->with('success', 'Data Berhasil di Simpan');
 
     }
 
@@ -129,6 +134,6 @@ class CustomerController extends Controller
         $data->delete();
         //mass delete
         //Controller::destroy($id);
-        return redirect('customer')->with('success','Data Berhasil di Hapus');
+        return redirect('customer')->with('success', 'Data Berhasil di Hapus');
     }
 }
