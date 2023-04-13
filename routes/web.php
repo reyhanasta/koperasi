@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WithdrawalController;
 use App\Models\Officer;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -45,5 +46,6 @@ Route::middleware('auth','log.crud.activity')->group(function () {
     Route::resource('customer-account', CustomerAccountController::class);
     Route::resource('master-jabatan', MasterJabatanController::class);
     Route::resource('tr-savings', SavingController::class);
+    Route::resource('tr-withdraw', WithdrawalController::class);
 });
 

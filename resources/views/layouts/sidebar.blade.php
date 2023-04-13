@@ -94,7 +94,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="/simpan" class="nav-link {{ request()->is('simpan') ? 'active' : '' }}">
+              <a href="/tr-withdraw" class="nav-link {{ request()->is('tr-withdraw') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Penarikan</p>
               </a>

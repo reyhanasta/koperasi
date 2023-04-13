@@ -12,4 +12,7 @@ class CustomerAccount extends Model
     public function savings(){
         return $this->hasMany(Saving::class);
     }
+    public function withdraw(){
+        return $this->hasMany(Withdrawal::class);
+    }
 }

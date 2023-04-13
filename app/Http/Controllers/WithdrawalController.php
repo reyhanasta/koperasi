@@ -2,29 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CustomerAccount;
-use App\Models\Saving;
 use App\Models\Customer;
+use App\Models\Withdrawal;
 use Illuminate\Http\Request;
+use App\Models\CustomerAccount;
+use App\Http\Controllers\Controller;
 
-class SavingController extends Controller
+class WithdrawalController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
         //
-        // $data = Saving::all()->sortByDesc('created_at');
-        // Mendapatkan semua data anggota beserta data pinjaman yang dimilikinya
-        $data = Saving::with('customer')->get()->sortByDesc('created_at');
+        $data = Withdrawal::with('customer_acc')->get()->sortByDesc('created_at');
         $back = url()->previous();
-
-
-        return view('transaksi.simpanan.list', compact('data', 'back'));
+        return view('transaksi.penarikan.list', compact('data'));
     }
 
     /**
@@ -35,11 +31,11 @@ class SavingController extends Controller
     public function create()
     {
         //
-        $data = new Saving;
+        $data = new Withdrawal;
         $customer = Customer::all();
         $back = url()->previous();
         $confirm = "return confirm('Pastikan Data sudah di isi dengan benar, karena data transaksi tidak dapat di ubah lagi')";
-        return view('transaksi.simpanan.add', compact('data', 'customer', 'back', 'confirm'));
+        return view('transaksi.penarikan.add', compact('customer', 'data', 'back', 'confirm'));
     }
 
     /**
@@ -51,26 +47,30 @@ class SavingController extends Controller
     public function store(Request $request)
     {
         //
-        $data = new Saving();
-        //$id_rekening = CustomerAccount::findBy('id_customer',$request->customer);
+        $data = new Withdrawal;
         $rekeningNasabah = CustomerAccount::where('id_customer', $request->customer)->first();
         $validateData = $request->validate([
             'customer' => 'required',
-            'amount' => ['required','min:5000','numeric'],
+            'amount' => [
+                'required',
+                'min:20000',
+                'numeric',
+                function ($attribute, $value, $fail) use ($rekeningNasabah) {
+                    $balance = $rekeningNasabah->balance;
+                    if ($value > $balance) {
+                        return $fail("The $attribute must not be greater than the account balance.");
+                    }
+                },
+            ],
         ]);
-        if ($validateData) {
+        $data->customer_acc_id = $rekeningNasabah->id;
+        $data->amount = $request->amount;
+        $data->desc = $request->desc;
+        $rekeningNasabah->balance -= $request->amount;
+        $rekeningNasabah->save();
+        $data->save();
 
-            $data->id_customer = $rekeningNasabah->id;
-            $data->type = $request->type;
-            $data->amount = $request->amount;
-            $data->desc = $request->desc;
-            $rekeningNasabah->balance += $request->amount;
-            $rekeningNasabah->save();
-            $data->save();
-            return redirect('/tr-savings')->with('success', 'Data berhasil di tambahkan dan buku tabungan nasabah berhasil di Update!');
-        }
-        return back()->with('warning', 'Data Nasabah masih kosong, harap tambahkan terlebih dahulu');
-
+        return redirect('tr-withdraw/')->with('success', 'Data Berhasil Di tambahkan!');
     }
 
     /**
