@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
     {
      
         //Customer::factory(5)->create();
-        MasterJabatan::factory(5)->create();
+        MasterJabatan::create(['name' => 'Staff Administrasi']);
+        MasterJabatan::create(['name' => 'Staff Keuangan']);
         User::factory(1)->create();
 
     }

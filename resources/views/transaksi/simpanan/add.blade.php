@@ -6,9 +6,22 @@
             <div class="row">
                 <div class="col-lg-4"></div>
                 <div class="col-lg-4">
+                    @error('customer')
+                    <div class="card card-warning">
+                        <div class="card-header">
+                          <h3 class="card-title ">Tambahkan Data Nasabah Terlebih Dahulu!</h3>
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                            </button>
+                          </div>
+                          <!-- /.card-tools -->
+                        </div>
+                        <!-- /.card-header -->
+                      </div>
+                    @enderror
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Formulir Simpanan Nasabah</h3>
+                            <h3 class="card-title">Formulir Transaksi Simpanan</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -17,8 +30,7 @@
                             @include('transaksi.simpanan._form')
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button type="submit" onclick="{{$confirm}}"
-                                    class="btn btn-primary">Submit</button>
+                                <button type="submit" onclick="{{ $confirm }}" class="btn btn-primary">Submit</button>
                                 <a class="btn btn-light" href="{{ $back }}">Cancel</a>
                             </div>
                         </form>

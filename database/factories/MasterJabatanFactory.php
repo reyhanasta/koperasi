@@ -15,7 +15,7 @@ class MasterJabatanFactory extends Factory
     {
         return [
               //
-              'name' =>  $this->faker->jobTitle()
+              
         ];
     }
 }

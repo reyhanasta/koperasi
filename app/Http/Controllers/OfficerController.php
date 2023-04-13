@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Officer;
 use Illuminate\Http\Request;
 use App\Models\MasterJabatan;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;

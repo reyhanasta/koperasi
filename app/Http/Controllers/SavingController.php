@@ -51,17 +51,23 @@ class SavingController extends Controller
     public function store(Request $request)
     {
         //
-        $data = new Saving();
-        //$id_rekening = CustomerAccount::findBy('id_customer',$request->customer);
-        $rekeningNasabah = CustomerAccount::where('id_customer', $request->customer)->first();
-        $data->id_customer = $rekeningNasabah->id;
-        $data->type = $request->type;
-        $data->amount = $request->amount;
-        $data->desc = $request->desc;
-        $rekeningNasabah->balance += $request->amount;
-        $rekeningNasabah->save();
-        $data->save();
-        return redirect('/tr-savings')->with('success','Data berhasil di tambahkan dan buku tabungan nasabah berhasil di Update!');
+        $validateData = $request->validate([
+            'customer' => 'required',
+        ]);
+        if($validateData){
+            $data = new Saving();
+            //$id_rekening = CustomerAccount::findBy('id_customer',$request->customer);
+            $rekeningNasabah = CustomerAccount::where('id_customer', $request->customer)->first();
+            $data->id_customer = $rekeningNasabah->id;
+            $data->type = $request->type;
+            $data->amount = $request->amount;
+            $data->desc = $request->desc;
+            $rekeningNasabah->balance += $request->amount;
+            $rekeningNasabah->save();
+            $data->save();
+            return redirect('/tr-savings')->with('success','Data berhasil di tambahkan dan buku tabungan nasabah berhasil di Update!');
+        }
+        return back()->with('warning','Data Nasabah masih kosong, harap tambahkan terlebih dahulu');
 
     }
 

@@ -1,5 +1,5 @@
 <div class="card-body">
-    <div class="form-group">
+    <div class="form-group ">
         <label>Data Nasabah</label>
         @if ($customer->count() > 0)
             <select class="form-control" name="customer">

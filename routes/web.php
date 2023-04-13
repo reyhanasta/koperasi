@@ -39,7 +39,7 @@ Route::get('/login',[LoginController::class,'index'])->name('login')->middleware
 Route::post('/login',[LoginController::class,'authenticate']);
 Route::post('/logout',[LoginController::class,'logout']);
 //RESOURCE
-Route::middleware('auth')->group(function () {
+Route::middleware('auth','log.crud.activity')->group(function () {
     Route::resource('officer', OfficerController::class);
     Route::resource('customer', CustomerController::class);
     Route::resource('customer-account', CustomerAccountController::class);
