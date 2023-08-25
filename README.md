@@ -9,7 +9,7 @@
 
 ## About Project
 
-Project ini merupakan sebauh project yang saya kembangkan sendiri dengan menggunakan framework laravel. Ini merupakan project yang pertama kali saya kembangkan dengan framework laravel
+Project ini merupakan sebauh project yang saya kembangkan sendiri dengan menggunakan framework laravel. Ini merupakan project yang pertama kali saya kembangkan dengan framework laravel, versi laravel yang saya gunakan di project ini adalah Laravel 8.
 
 ## Project Goals
 
